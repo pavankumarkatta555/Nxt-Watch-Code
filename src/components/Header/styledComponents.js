@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const NavContainer = styled.nav`
   height: 10vh;
-  background-color: ${props => (props.bg ? '#313131' : '#ffffff')};
+  background-color: ${props => (props.bg ? '#212121' : '#ffffff')};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -83,6 +83,15 @@ export const NavCloseBtnMobile = styled.button`
   align-self: flex-end;
   margin: 32px;
 `
+
+export const ThemeButton = styled.button`
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 24px;
+  color: ${props => (props.modeColor ? '#ffffff' : '#0f0f0f')};
+`
+
 export const NavMenuResponsiveContainer = styled.div`
   height: 60vh;
   display: flex;
@@ -91,6 +100,7 @@ export const NavMenuResponsiveContainer = styled.div`
 `
 
 export const NavMenuListContainer = styled.ul`
+  width: 100%;
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -108,6 +118,7 @@ export const NavMenuListItem = styled.li`
   font-size: 22px;
   margin: 6px;
   padding: 6px;
+  padding-left: 48px;
 `
 
 export const NavLogOutPopUpMobile = styled.div`

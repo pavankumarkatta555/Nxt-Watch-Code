@@ -37,6 +37,7 @@ import {
   NavPopUpModalMsg,
   NavPopUpModalLogOutCancelBtnContainer,
   NavPopUpModalLogOutCancelBtn,
+  ThemeButton,
 } from './styledComponents'
 import './index.css'
 
@@ -50,19 +51,19 @@ const popUpLinks = [
   {
     tabId: 'TRENDING',
     text: 'Trending',
-    navLink: '/',
+    navLink: '/trending',
     icon: <HiFire />,
   },
   {
     tabId: 'GAMING',
     text: 'Gaming',
-    navLink: '/',
+    navLink: '/gaming',
     icon: <SiYoutubegaming />,
   },
   {
     tabId: 'SAVEDVIDEOS',
     text: 'Saved Videos',
-    navLink: '/',
+    navLink: '/saved-videos',
     icon: <MdPlaylistAdd />,
   },
 ]
@@ -70,7 +71,7 @@ const popUpLinks = [
 const Header = props => (
   <ThemeContext.Consumer>
     {value => {
-      const {isDarkTheme, activeTabId, toggleTheme} = value
+      const {isDarkTheme, toggleTheme} = value
 
       const onToggleTheme = () => {
         toggleTheme()
@@ -88,6 +89,9 @@ const Header = props => (
 
       const bgModeIcon = isDarkTheme ? <BsBrightnessHigh /> : <FaMoon />
 
+      const {history} = props
+      const {pathname} = history.location
+
       return (
         <NavContainer bg={isDarkTheme}>
           <NavWebsiteLogoContainer>
@@ -97,7 +101,9 @@ const Header = props => (
           </NavWebsiteLogoContainer>
           <NavUnorderedListContainer>
             <NavListItem modeColor={isDarkTheme} onClick={onToggleTheme}>
-              {bgModeIcon}
+              <ThemeButton data-testid="theme" modeColor={isDarkTheme}>
+                {bgModeIcon}
+              </ThemeButton>
             </NavListItem>
             <NavListItem modeColor={isDarkTheme}>
               <NavMenuIconContainer>
@@ -111,20 +117,28 @@ const Header = props => (
                 >
                   {close => (
                     <NavMenuContainer bg={isDarkTheme}>
-                      <NavCloseBtnMobile onClick={() => close()}>
+                      <NavCloseBtnMobile
+                        data-testid="close"
+                        onClick={() => close()}
+                      >
                         <IoCloseSharp color={isDarkTheme ? '#f9f9f9' : ''} />
                       </NavCloseBtnMobile>
                       <NavMenuResponsiveContainer>
                         <NavMenuListContainer>
                           {popUpLinks.map(each => {
                             const {tabId, text, navLink, icon} = each
+
                             return (
                               <NavMenuListItem
                                 key={tabId}
-                                isActive={tabId === activeTabId}
+                                isActive={navLink === pathname}
                               >
                                 {icon}
-                                <Link className="nav-link" to={navLink}>
+                                <Link
+                                  key={tabId}
+                                  className="nav-link"
+                                  to={navLink}
+                                >
                                   {text}
                                 </Link>
                               </NavMenuListItem>
@@ -156,7 +170,7 @@ const Header = props => (
                   {close => (
                     <NavPopUpModalContainer bg={isDarkTheme}>
                       <NavPopUpModalMsg modeColor={isDarkTheme}>
-                        Are you sure you want to logout?
+                        Are you sure,you want to logout?
                       </NavPopUpModalMsg>
                       <NavPopUpModalLogOutCancelBtnContainer>
                         <NavPopUpModalLogOutCancelBtn
@@ -188,7 +202,7 @@ const Header = props => (
                   {close => (
                     <NavPopUpModalContainer bg={isDarkTheme}>
                       <NavPopUpModalMsg modeColor={isDarkTheme}>
-                        Are you sure you want to logout?
+                        Are you sure, you want to logout?
                       </NavPopUpModalMsg>
                       <NavPopUpModalLogOutCancelBtnContainer>
                         <NavPopUpModalLogOutCancelBtn

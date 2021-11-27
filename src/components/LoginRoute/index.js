@@ -4,6 +4,22 @@ import Cookies from 'js-cookie'
 
 import ThemeContext from '../../context/ThemeContext'
 
+import {
+  LoginRouteMainContainer,
+  LoginRouteResponsiveContainer,
+  LoginFormContainer,
+  LoginWebsiteLogo,
+  LoginForm,
+  LoginInputContainer,
+  LoginInputLabel,
+  LoginInput,
+  LoginCheckBoxContainer,
+  LoginCheckBoxInput,
+  LoginCheckBoxLabel,
+  LoginButton,
+  ErrorMsg,
+} from './styledComponents'
+
 import './index.css'
 
 class LoginRoute extends Component {
@@ -15,10 +31,10 @@ class LoginRoute extends Component {
     showErrMsg: false,
   }
 
-  onSubmitSuccess = jwtToken => {
+  onSubmitSuccess = JWTtoken => {
     const {history} = this.props
 
-    Cookies.set('jwt_token', jwtToken, {expires: 30})
+    Cookies.set('jwt_token', JWTtoken, {expires: 30})
     history.replace('/')
   }
 
@@ -73,87 +89,65 @@ class LoginRoute extends Component {
         {value => {
           const {isDarkTheme} = value
 
-          const loginBgColor = isDarkTheme
-            ? 'login-bg-dark-container'
-            : 'login-bg-light-container'
-
           const loginWebsiteLogo = isDarkTheme
             ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png'
             : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
 
-          const loginFormContainer = isDarkTheme
-            ? 'login-form-dark-container'
-            : 'login-form-light-container'
-
-          const inputLabelClassName = isDarkTheme
-            ? 'input-label-dark'
-            : 'input-label-light'
-
-          const errorMsg = isDarkTheme ? 'err-msg-dark' : 'err-msg-light'
-
           return (
-            <div className={`login-bg-container ${loginBgColor}`}>
-              <div className="login-responsive-container">
-                <form
-                  className={`login-form-container ${loginFormContainer}`}
-                  onSubmit={this.onSubmitForm}
-                >
-                  <img
-                    src={loginWebsiteLogo}
-                    alt="website logo"
-                    className="login-website-logo"
-                  />
-                  <label
-                    htmlFor="loginUserNameInput"
-                    className={`input-label ${inputLabelClassName}`}
-                  >
-                    USERNAME
-                  </label>
-                  <input
-                    id="loginUserNameInput"
-                    type="text"
-                    placeholder="Username"
-                    className="login-input"
-                    onChange={this.onChangeUsername}
-                    value={username}
-                  />
-                  <label
-                    htmlFor="loginUserNameInput"
-                    className={`input-label ${inputLabelClassName}`}
-                  >
-                    PASSWORD
-                  </label>
-                  <input
-                    id="loginPasswordInput"
-                    type={showingPassword}
-                    placeholder="Password"
-                    className="login-input"
-                    onChange={this.onChangePassword}
-                    value={password}
-                  />
-                  <div className="check-box-container">
-                    <input
-                      type="checkBox"
-                      id="loginInputCheckBox"
-                      className="input-check-box"
-                      onClick={this.onClickCheckbox}
-                    />
-                    <label
-                      htmlFor="loginInputCheckBox"
-                      className={`input-label-check-box ${inputLabelClassName}`}
-                    >
-                      Show Passwords
-                    </label>
-                  </div>
-                  <button type="submit" className="login-button">
-                    Login
-                  </button>
-                  {showErrMsg && (
-                    <p className={`error-msg ${errorMsg}`}> *{errMsg}</p>
-                  )}
-                </form>
-              </div>
-            </div>
+            <LoginRouteMainContainer bg={isDarkTheme}>
+              <LoginRouteResponsiveContainer>
+                <LoginFormContainer bg={isDarkTheme}>
+                  <LoginWebsiteLogo src={loginWebsiteLogo} alt="website logo" />
+                  <LoginForm onSubmit={this.onSubmitForm}>
+                    <LoginInputContainer>
+                      <LoginInputLabel
+                        htmlFor="loginUserNameInput"
+                        bg={isDarkTheme}
+                      >
+                        USERNAME
+                      </LoginInputLabel>
+                      <LoginInput
+                        id="loginUserNameInput"
+                        type="text"
+                        placeholder="Username"
+                        onChange={this.onChangeUsername}
+                        value={username}
+                      />
+                    </LoginInputContainer>
+                    <LoginInputContainer>
+                      <LoginInputLabel
+                        htmlFor="loginUserNameInput"
+                        bg={isDarkTheme}
+                      >
+                        PASSWORD
+                      </LoginInputLabel>
+                      <LoginInput
+                        id="loginPasswordInput"
+                        type={showingPassword}
+                        placeholder="Password"
+                        onChange={this.onChangePassword}
+                        value={password}
+                      />
+                    </LoginInputContainer>
+                    <LoginCheckBoxContainer>
+                      <LoginCheckBoxInput
+                        type="checkbox"
+                        id="loginInputCheckBox"
+                        onClick={this.onClickCheckbox}
+                      />
+                      <LoginCheckBoxLabel
+                        htmlFor="loginInputCheckBox"
+                        bg={isDarkTheme}
+                      >
+                        Show Password
+                      </LoginCheckBoxLabel>
+                    </LoginCheckBoxContainer>
+                    <LoginButton type="submit">Login</LoginButton>
+                    {showErrMsg && <ErrorMsg>*{errMsg}</ErrorMsg>}
+                  </LoginForm>
+                </LoginFormContainer>
+              </LoginRouteResponsiveContainer>
+            </LoginRouteMainContainer>
           )
         }}
       </ThemeContext.Consumer>

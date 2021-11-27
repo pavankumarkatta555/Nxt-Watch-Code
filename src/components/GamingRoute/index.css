@@ -1,0 +1,11 @@
+.jobs-link-item {
+  text-decoration: none;
+  width: 40%;
+  margin: 16px;
+}
+
+@media (min-width: 576px) {
+  .jobs-link-item {
+    width: 28%;
+  }
+}
